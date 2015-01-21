@@ -1,0 +1,48 @@
+---
+- name: Copy the Dynatrace Collector installer to {{ dynatrace_collector_linux_install_dir }}
+  copy: src="{{ playbook_dir }}/roles/{{ dynatrace_collector_role_name }}/files/linux/{{ dynatrace_collector_linux_installer_file_name }}" dest="{{ dynatrace_collector_linux_install_dir }}"
+  sudo: yes
+
+- name: Copy the Dynatrace Collector installer script to /tmp
+  template: src=../../templates/linux/run-dynatrace-collector-installer.sh.j2 dest=/tmp/run-dynatrace-collector-installer.sh
+
+- name: Stop and disable running Dynatrace Collector services
+  service: name={{ item }} state=stopped enabled=no
+  with_items: dynatrace_collector_linux_service_names
+  sudo: yes
+  ignore_errors: yes
+
+- name: Sleep for 5 seconds...
+  pause: seconds=5
+
+- name: Install the Dynatrace Collector
+  shell: /bin/bash /tmp/run-dynatrace-collector-installer.sh
+  sudo: yes
+
+- name: Gather the name of the installation directory
+  shell: find . -maxdepth 1 -name dynatrace-\* -type d -printf '%T@ %p\n' | sort -k 1nr | cut -d' ' -f2 | head -1 chdir={{ dynatrace_collector_linux_install_dir }}
+  register: dynatrace_collector_installed_version_dir
+  sudo: yes
+
+- name: Change ownership of the installation directory
+  file: path={{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }} owner=dynatrace group=dynatrace state=directory recurse=yes
+  sudo: yes
+
+- name: Change mode of the installation directory
+  file: path={{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }} mode=0700
+  sudo: yes
+
+- name: Create a symlink of the actual installation directory to {{ dynatrace_collector_linux_install_dir }}/dynatrace
+  file: src={{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }} dest={{ dynatrace_collector_linux_install_dir }}/dynatrace owner=dynatrace group=dynatrace mode=0700 state=link
+  sudo: yes
+
+- name: Remove the Dynatrace Collector installer
+  file: path="{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_linux_installer_file_name }}" state=absent
+  sudo: yes
+
+- include: install-dynatrace-collector-initd-scripts.yml
+
+- name: Enable and start Dynatrace Collector services
+  service: name={{ item }} state=restarted sleep=5 enabled=yes
+  with_items: dynatrace_collector_linux_service_names
+  sudo: yes

@@ -1,0 +1,6 @@
+---
+- name: Remove package 'default-jre'
+  apt: pkg=default-jre state=absent
+  when: java_installed|success
+  ignore_errors: yes
+  sudo: yes

@@ -1,0 +1,10 @@
+---
+dynatrace_collector_installer_bitsize: 64
+
+dynatrace_collector_linux_install_dir: /opt
+dynatrace_collector_linux_installer_file_name: dynatrace-collector.jar
+
+dynatrace_collector_role_name: Dynatrace-Collector
+
+# Do not change anything below unless you know what you are doing!
+dynatrace_collector_linux_service_names: [dynaTraceCollector]

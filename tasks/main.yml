@@ -1,0 +1,3 @@
+---
+- include: install-dynatrace-collector-linux.yml
+  when: ansible_system == "Linux"
