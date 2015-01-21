@@ -1,6 +1,6 @@
 # Dynatrace-Collector-Ansible
 
-An [Ansible](ansible.com) role for automated deployments of the [Dynatrace](bit.ly/dttrial) Collector. 
+An [Ansible](http://www.ansible.com) role for automated deployments of the [Dynatrace](http://bit.ly/dttrial) Collector. 
 
 **Note**: Currently, we support only Linux hosts, support for installing Windows hosts is in the making.
 
@@ -13,7 +13,7 @@ The role is available via:
 
 ## Requirements
 
-Download the Dynatrace Collector installer from [downloads.compuwareapm.com](downloads.compuwareapm.com) and place the artifact as ```dynatrace-collector.jar``` in the role's ```files``` directory from where it will be picked up during the automated installation.
+Download the Dynatrace Collector installer from [downloads.compuwareapm.com](http://downloads.compuwareapm.com) and place the artifact as ```dynatrace-collector.jar``` in the role's ```files``` directory from where it will be picked up during the automated installation.
 
 ## Role Variables
 
@@ -34,7 +34,7 @@ As defined in ```defaults/main.yml```:
 
 ## Additional Resources
 
-- [Slide Deck: Automated Deployments](slideshare.net/MartinEtmajer/automated-deployments-slide-share)
+- [Slide Deck: Automated Deployments](http://slideshare.net/MartinEtmajer/automated-deployments-slide-share)
 - [Slide Deck: Introduction to Automated Deployments with Ansible](http://www.slideshare.net/MartinEtmajer/introduction-to-automated-deployments-with-ansible)
 
 ## Questions?
