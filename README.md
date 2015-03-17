@@ -19,21 +19,21 @@ Download the Dynatrace Collector installer from [downloads.compuwareapm.com](htt
 
 As defined in ```defaults/main.yml```:
 
-| Name                                            | Default                 | Description |
-|-------------------------------------------------|-------------------------|-------------|
-| *dynatrace_collector_installer_bitsize*         | 64                      | 32 or 64    |
-| *dynatrace_collector_linux_install_dir*         | /opt                    | The Dynatrace Collector will be installed into the directory *$dynatrace_collector_linux_install_dir*/dynatrace-*$major*-*$minor*-*$rev*, where *$major*, *$minor* and *$rev* are given by the installer. A symbolic link to the actual installation directory will be created in *$dynatrace_collector_linux_install_dir*/dynatrace. |
-| *dynatrace_collector_linux_installer_file_name* | dynatrace-collector.jar | The file name of the Dynatrace Collector installer in the role's ```files``` directory. |
-| *dynatrace_collector_agent_port*                | 9998                    | The port where the Collector shall listen for agent connections. |
-| *dynatrace_collector_server_hostname*           | localhost               | The location of the Server the Collector shall connect to. |
-| *dynatrace_collector_server_port*               | 6698                    | The port on the Server the Collector shall connect to. Use either ```6698``` (non-SSL) or ```6699``` (SSL). |
-| *dynatrace_collector_role_name*                 | Dynatrace-Collector     | The actual name of this role in an [Ansible Playbook's](http://docs.ansible.com/playbooks.html) ```roles``` directory. |
+| Name                                            | Default                       | Description |
+|-------------------------------------------------|-------------------------------|-------------|
+| *dynatrace_collector_installer_bitsize*         | 64                            | 32 or 64    |
+| *dynatrace_collector_linux_install_dir*         | /opt                          | The Dynatrace Collector will be installed into the directory *$dynatrace_collector_linux_install_dir*/dynatrace-*$major*-*$minor*-*$rev*, where *$major*, *$minor* and *$rev* are given by the installer. A symbolic link to the actual installation directory will be created in *$dynatrace_collector_linux_install_dir*/dynatrace. |
+| *dynatrace_collector_linux_installer_file_name* | dynatrace-collector.jar       | The file name of the Dynatrace Collector installer in the role's ```files``` directory. |
+| *dynatrace_collector_agent_port*                | 9998                          | The port where the Collector shall listen for agent connections. |
+| *dynatrace_collector_server_hostname*           | localhost                     | The location of the Server the Collector shall connect to. |
+| *dynatrace_collector_server_port*               | 6698                          | The port on the Server the Collector shall connect to. Use either ```6698``` (non-SSL) or ```6699``` (SSL). |
+| *dynatrace_collector_role_name*                 | dynatrace.Dynatrace-Collector | The actual name of this role in an [Ansible Playbook's](http://docs.ansible.com/playbooks.html) ```roles``` directory. |
 
 ## Example Playbook
 
 	- hosts: all
 	  roles:
-	    - { role: Dynatrace-Collector }
+	    - { role: dynatrace.Dynatrace-Collector }
 
 ## Additional Resources
 

@@ -8,7 +8,7 @@ dynatrace_collector_agent_port: 9998
 dynatrace_collector_server_hostname: localhost
 dynatrace_collector_server_port: 6698
 
-dynatrace_collector_role_name: Dynatrace-Collector
+dynatrace_collector_role_name: dynatrace.Dynatrace-Collector
 
 # Do not change anything below unless you know what you are doing!
 dynatrace_collector_linux_service_names: [dynaTraceCollector]
