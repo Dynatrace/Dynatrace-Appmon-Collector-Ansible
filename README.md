@@ -33,7 +33,7 @@ As defined in ```defaults/main.yml```:
 
 	- hosts: all
 	  roles:
-	    - { role: dynatrace.Dynatrace-Collector }
+	    - role: dynatrace.Dynatrace-Collector
 
 ## Additional Resources
 
