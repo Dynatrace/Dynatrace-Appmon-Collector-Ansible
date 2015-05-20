@@ -2,8 +2,6 @@
 
 An [Ansible](http://www.ansible.com) role for automated deployments of the [Dynatrace](http://bit.ly/dttrial) Collector. 
 
-**Note**: Currently, we support only Linux hosts, support for installing Windows hosts is in the making.
-
 ## Download
 
 The role is available via:
@@ -13,7 +11,7 @@ The role is available via:
 
 ## Requirements
 
-Download the Dynatrace Collector installer from [downloads.compuwareapm.com](http://downloads.compuwareapm.com) and place the artifact as ```dynatrace-collector.jar``` in the role's ```files``` directory from where it will be picked up during the automated installation.
+Download the Dynatrace Collector installer from [downloads.dynatrace.com](downloads.dynatrace.com) and place the artifact as ```dynatrace-collector.jar``` in the role's ```files/linux``` directory from where it will be picked up during the automated installation. Alternatively, you can make the Dynatrace Collector installer available at an HTTP, HTTPS or FTP resource and point the installation script to the right location, see below.
 
 ## Role Variables
 
