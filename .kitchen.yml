@@ -9,9 +9,15 @@ driver:
   name: docker
 
 platforms:
+  - name: centos-6
+    driver_config:
+      image: dynatrace/centos-testing:6
   - name: debian-7.8
     driver_config:
       image: dynatrace/debian-testing:7.8
+  - name: ubuntu-12.04
+    driver_config:
+      image: dynatrace/ubuntu-testing:12.04
 
 suites:
   - name: default
