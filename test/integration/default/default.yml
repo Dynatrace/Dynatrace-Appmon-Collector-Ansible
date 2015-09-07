@@ -3,3 +3,7 @@
   roles:
   - role: dynatrace.Dynatrace-Collector
     dynatrace_collector_linux_installer_file_url: http://10.0.2.2/dynatrace/dynatrace-collector.jar
+    dynatrace_collector_jvm_xms: 256M
+    dynatrace_collector_jvm_xmx: 1024M
+    dynatrace_collector_jvm_perm_size: 256m
+    dynatrace_collector_jvm_max_perm_size: 384m

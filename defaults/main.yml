@@ -3,11 +3,16 @@ dynatrace_collector_installer_bitsize: 64
 
 dynatrace_collector_linux_install_dir: /opt
 dynatrace_collector_linux_installer_file_name: dynatrace-collector.jar
-dynatrace_collector_linux_installer_file_url: http://localhost/dynatrace/dynatrace-collector.jar
+dynatrace_collector_linux_installer_file_url:
 
 dynatrace_collector_agent_port: 9998
 dynatrace_collector_server_hostname: localhost
 dynatrace_collector_server_port: 6698
+
+dynatrace_collector_jvm_xms:
+dynatrace_collector_jvm_xmx:
+dynatrace_collector_jvm_perm_size:
+dynatrace_collector_jvm_max_perm_size: 
 
 dynatrace_collector_role_name: dynatrace.Dynatrace-Collector
 

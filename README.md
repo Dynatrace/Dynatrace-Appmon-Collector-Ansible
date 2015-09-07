@@ -26,6 +26,10 @@ As defined in ```defaults/main.yml```:
 | *dynatrace_collector_agent_port*                | 9998                                            | The port where the Collector shall listen for agent connections. |
 | *dynatrace_collector_server_hostname*           | localhost                                       | The location of the Server the Collector shall connect to. |
 | *dynatrace_collector_server_port*               | 6698                                            | The port on the Server the Collector shall connect to. Use either ```6698``` (non-SSL) or ```6699``` (SSL). |
+| *dynatrace_collector_jvm_xms*                   |                                                 | The Dynatrace Collector's JVM setting: -Xms. |
+| *dynatrace_collector_jvm_xmx*                   |                                                 | The Dynatrace Collector's JVM setting: -Xmx. |
+| *dynatrace_collector_jvm_perm_size*             |                                                 | The Dynatrace Collector's JVM setting: -XX:PermSize. |
+| *dynatrace_collector_jvm_max_perm_size*         |                                                 | The The Dynatrace Collector's JVM setting: -XX:MaxPermSize. |
 | *dynatrace_collector_role_name*                 | dynatrace.Dynatrace-Collector                   | The actual name of this role in an [Ansible Playbook's](http://docs.ansible.com/playbooks.html) ```roles``` directory. |
 
 ## Example Playbook

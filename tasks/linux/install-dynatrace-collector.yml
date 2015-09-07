@@ -50,7 +50,21 @@
   file: path="{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_linux_installer_file_name }}" state=absent
   sudo: yes
 
-- include: install-dynatrace-collector-initd-scripts.yml
+- name: Compute the Dynatrace Collector's start runlevels for Ubuntu and Debian based distros
+  set_fact:
+    linux_service_start_runlevels="2 3 4 5"
+    linux_service_stop_runlevels="0 1 6"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Compute the Dynatrace Collector's start runlevels
+  set_fact:
+    linux_service_start_runlevels="3 4 5"
+    linux_service_stop_runlevels="0 1 2 6"
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Make the 'dynaTraceCollector' init script available in /etc/init.d
+  template: src=../../templates/linux/init.d/dynaTraceCollector.j2 dest=/etc/init.d/dynaTraceCollector owner=root group=root mode=0755
+  sudo: yes
 
 - name: Enable and start Dynatrace Collector services
   service: name={{ item }} state=restarted sleep=5 enabled=yes
