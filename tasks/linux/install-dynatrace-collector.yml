@@ -58,7 +58,7 @@
 
 - name: Compute the Dynatrace Collector's start runlevels
   set_fact:
-    linux_service_start_runlevels="3 4 5"
+    linux_service_start_runlevels="3 5"
     linux_service_stop_runlevels="0 1 2 6"
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
