@@ -22,8 +22,10 @@
   sudo: yes
   ignore_errors: yes
 
-- name: Sleep for 5 seconds...
-  pause: seconds=5
+- name: Wait for the Dynatrace Collector to become unavailable via port {{ dynatrace_collector_agent_port }}
+  wait_for: port={{ dynatrace_collector_agent_port }} state=stopped
+  with_items: [dynatrace_collector_agent_port]
+  sudo: yes
 
 - name: Install the Dynatrace Collector
   shell: /bin/bash /tmp/run-dynatrace-collector-installer.sh
@@ -70,4 +72,9 @@
 - name: Enable and start Dynatrace Collector services
   service: name={{ item }} state=restarted sleep=5 enabled=yes
   with_items: dynatrace_collector_linux_service_names
+  sudo: yes
+
+- name: Wait for the Dynatrace Collector to become available via port {{ dynatrace_collector_agent_port }}
+  wait_for: port={{ dynatrace_collector_agent_port }} state=started
+  with_items: [dynatrace_collector_agent_port]
   sudo: yes
