@@ -37,7 +37,7 @@ As defined in ```defaults/main.yml```:
 ```
 - hosts: all
   roles:
-    - role: dynatrace.Dynatrace-Collector
+    - role: Dynatrace.Dynatrace-Collector
 ```
 
 ## Testing
