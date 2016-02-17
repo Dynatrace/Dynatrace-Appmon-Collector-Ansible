@@ -6,7 +6,7 @@ This Ansible role installs and configures the Dynatrace Collector of the [Dynatr
 
 The role is available via:
 
-- [Ansible Galaxy](https://galaxy.ansible.com/list#/roles/5325)
+- [Ansible Galaxy](https://galaxy.ansible.com/Dynatrace/Dynatrace-Collector)
 - [GitHub](https://github.com/Dynatrace/Dynatrace-Collector-Ansible)
 
 ## Description
