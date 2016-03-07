@@ -30,6 +30,8 @@ As defined in ```defaults/main.yml```:
 | *dynatrace_collector_jvm_xmx*                   |                                                                          | The Dynatrace Collector's JVM setting: -Xmx. |
 | *dynatrace_collector_jvm_perm_size*             |                                                                          | The Dynatrace Collector's JVM setting: -XX:PermSize. |
 | *dynatrace_collector_jvm_max_perm_size*         |                                                                          | The The Dynatrace Collector's JVM setting: -XX:MaxPermSize. |
+| *dynatrace_collector_owner*                     | dynatrace                                                                | The system user that owns the Dynatrace installation.
+| *dynatrace_collector_group*                     | dynatrace                                                                | The system user's group that owns the Dynatrace installation.
 | *dynatrace_collector_role_name*                 | Dynatrace.Dynatrace-Collector                                            | The actual name of this role in an [Ansible Playbook's](http://docs.ansible.com/playbooks.html) ```roles``` directory. |
 
 ## Example Playbook
