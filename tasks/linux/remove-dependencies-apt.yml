@@ -5,4 +5,4 @@
     state: absent
   ignore_errors: yes
   when: not java_install | skipped
-  sudo: yes
+  become: yes

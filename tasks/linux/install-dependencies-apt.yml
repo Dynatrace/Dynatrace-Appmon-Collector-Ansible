@@ -3,13 +3,13 @@
   apt:
     update_cache: yes
   ignore_errors: yes
-  sudo: yes
+  become: yes
 
 - name: Check if 'java' is on the PATH
   shell: which java
   register: which_java_cmd
   ignore_errors: yes
-  sudo: yes
+  become: yes
 
 - name: Install package 'default-jre-headless'
   apt:
@@ -17,4 +17,4 @@
     state: present
   register: java_install
   when: which_java_cmd.rc != 0
-  sudo: yes
+  become: yes

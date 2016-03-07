@@ -4,7 +4,7 @@
     path: "{{ dynatrace_collector_linux_install_dir }}"
     state: directory
   register: dynatrace_collector_create_install_dir_result
-  sudo: yes
+  become: yes
 
 - name: Change ownership of the installation directory if it had to be created
   file:
@@ -12,13 +12,13 @@
     owner: "{{ dynatrace_collector_owner }}"
     group: "{{ dynatrace_collector_group }}"
   when: dynatrace_collector_create_install_dir_result | changed
-  sudo: yes
+  become: yes
 
 - name: "Copy the Dynatrace Collector installer to {{ dynatrace_collector_linux_install_dir }}"
   copy:
     src: "{{ playbook_dir }}/roles/{{ dynatrace_collector_role_name }}/files/linux/{{ dynatrace_collector_linux_installer_file_name }}"
     dest: "{{ dynatrace_collector_linux_install_dir }}"
-  sudo: yes
+  become: yes
 
 - name: Copy the Dynatrace Collector installer script to /tmp
   template:
@@ -31,25 +31,25 @@
     state: stopped
     enabled: no
   ignore_errors: yes
-  sudo: yes
+  become: yes
 
 - name: "Wait for the Dynatrace Collector to become unavailable via port {{ dynatrace_collector_agent_port }}"
   wait_for:
     port: "{{ dynatrace_collector_agent_port }}"
     state: stopped
   with_items: [dynatrace_collector_agent_port]
-  sudo: yes
+  become: yes
 
 - name: Install the Dynatrace Collector
   shell: /bin/bash /tmp/run-dynatrace-collector-installer.sh
-  sudo: yes
+  become: yes
 
 - name: Gather the name of the installation directory
   shell: find . -maxdepth 1 -name dynatrace-\* -type d -printf '%T@ %p\n' | sort -k 1nr | cut -d' ' -f2 | head -1
   args:
     chdir: "{{ dynatrace_collector_linux_install_dir }}"
   register: dynatrace_collector_installed_version_dir
-  sudo: yes
+  become: yes
 
 - name: Change ownership of the installation directory
   file:
@@ -58,13 +58,13 @@
     group: "{{ dynatrace_collector_group }}"
     state: directory
     recurse: yes
-  sudo: yes
+  become: yes
 
 - name: Change mode of the installation directory
   file:
     path: "{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }}"
     mode: 0755
-  sudo: yes
+  become: yes
 
 - name: "Create a symlink of the actual installation directory to {{ dynatrace_collector_linux_install_dir }}/dynatrace"
   file:
@@ -74,13 +74,13 @@
     group: "{{ dynatrace_collector_group }}"
     mode: 0755
     state: link
-  sudo: yes
+  become: yes
 
 - name: Remove the Dynatrace Collector installer
   file:
     path: "{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_linux_installer_file_name }}"
     state: absent
-  sudo: yes
+  become: yes
 
 - name: Compute the Dynatrace Collector's start runlevels for Ubuntu and Debian based distros
   set_fact:
@@ -101,7 +101,7 @@
     owner: root
     group: root
     mode: 0755
-  sudo: yes
+  become: yes
 
 - name: Enable and start Dynatrace Collector services
   service:
@@ -109,11 +109,11 @@
     state: restarted
     sleep: 5
     enabled: yes
-  sudo: yes
+  become: yes
 
 - name: "Wait for the Dynatrace Collector to become available via port {{ dynatrace_collector_agent_port }}"
   wait_for:
     port: "{{ dynatrace_collector_agent_port }}"
     state: started
   with_items: [dynatrace_collector_agent_port]
-  sudo: yes
+  become: yes
