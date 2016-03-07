@@ -1,28 +1,42 @@
 ---
-- name: Create the installation directory {{ dynatrace_collector_linux_install_dir }}
-  file: path="{{ dynatrace_collector_linux_install_dir }}" state=directory
+- name: "Create the installation directory {{ dynatrace_collector_linux_install_dir }}"
+  file:
+    path: "{{ dynatrace_collector_linux_install_dir }}"
+    state: directory
   register: dynatrace_collector_create_install_dir_result
   sudo: yes
 
 - name: Change ownership of the installation directory if it had to be created
-  file: path="{{ dynatrace_collector_linux_install_dir }}" owner="{{ dynatrace_collector_owner }}" group="{{ dynatrace_collector_group }}"
-  when: dynatrace_collector_create_install_dir_result|changed
+  file:
+    path: "{{ dynatrace_collector_linux_install_dir }}"
+    owner: "{{ dynatrace_collector_owner }}"
+    group: "{{ dynatrace_collector_group }}"
+  when: dynatrace_collector_create_install_dir_result | changed
   sudo: yes
 
-- name: Copy the Dynatrace Collector installer to {{ dynatrace_collector_linux_install_dir }}
-  copy: src="{{ playbook_dir }}/roles/{{ dynatrace_collector_role_name }}/files/linux/{{ dynatrace_collector_linux_installer_file_name }}" dest="{{ dynatrace_collector_linux_install_dir }}"
+- name: "Copy the Dynatrace Collector installer to {{ dynatrace_collector_linux_install_dir }}"
+  copy:
+    src: "{{ playbook_dir }}/roles/{{ dynatrace_collector_role_name }}/files/linux/{{ dynatrace_collector_linux_installer_file_name }}"
+    dest: "{{ dynatrace_collector_linux_install_dir }}"
   sudo: yes
 
 - name: Copy the Dynatrace Collector installer script to /tmp
-  template: src=templates/linux/run-dynatrace-collector-installer.sh.j2 dest=/tmp/run-dynatrace-collector-installer.sh
+  template:
+    src: templates/linux/run-dynatrace-collector-installer.sh.j2
+    dest: /tmp/run-dynatrace-collector-installer.sh
 
 - name: Stop and disable running Dynatrace Collector services
-  service: name=dynaTraceCollector state=stopped enabled=no
-  sudo: yes
+  service:
+    name: dynaTraceCollector
+    state: stopped
+    enabled: no
   ignore_errors: yes
+  sudo: yes
 
-- name: Wait for the Dynatrace Collector to become unavailable via port {{ dynatrace_collector_agent_port }}
-  wait_for: port={{ dynatrace_collector_agent_port }} state=stopped
+- name: "Wait for the Dynatrace Collector to become unavailable via port {{ dynatrace_collector_agent_port }}"
+  wait_for:
+    port: "{{ dynatrace_collector_agent_port }}"
+    state: stopped
   with_items: [dynatrace_collector_agent_port]
   sudo: yes
 
@@ -31,24 +45,41 @@
   sudo: yes
 
 - name: Gather the name of the installation directory
-  shell: find . -maxdepth 1 -name dynatrace-\* -type d -printf '%T@ %p\n' | sort -k 1nr | cut -d' ' -f2 | head -1 chdir={{ dynatrace_collector_linux_install_dir }}
+  shell: find . -maxdepth 1 -name dynatrace-\* -type d -printf '%T@ %p\n' | sort -k 1nr | cut -d' ' -f2 | head -1
+  args:
+    chdir: "{{ dynatrace_collector_linux_install_dir }}"
   register: dynatrace_collector_installed_version_dir
   sudo: yes
 
 - name: Change ownership of the installation directory
-  file: path={{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }} owner="{{ dynatrace_collector_owner }}" group="{{ dynatrace_collector_group }}" state=directory recurse=yes
+  file:
+    path: "{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }}"
+    owner: "{{ dynatrace_collector_owner }}"
+    group: "{{ dynatrace_collector_group }}"
+    state: directory
+    recurse: yes
   sudo: yes
 
 - name: Change mode of the installation directory
-  file: path={{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }} mode=0755
+  file:
+    path: "{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }}"
+    mode: 0755
   sudo: yes
 
-- name: Create a symlink of the actual installation directory to {{ dynatrace_collector_linux_install_dir }}/dynatrace
-  file: src={{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }} dest={{ dynatrace_collector_linux_install_dir }}/dynatrace owner="{{ dynatrace_collector_owner }}" group="{{ dynatrace_collector_group }}" mode=0755 state=link
+- name: "Create a symlink of the actual installation directory to {{ dynatrace_collector_linux_install_dir }}/dynatrace"
+  file:
+    src: "{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }}"
+    dest: "{{ dynatrace_collector_linux_install_dir }}/dynatrace"
+    owner: "{{ dynatrace_collector_owner }}"
+    group: "{{ dynatrace_collector_group }}"
+    mode: 0755
+    state: link
   sudo: yes
 
 - name: Remove the Dynatrace Collector installer
-  file: path="{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_linux_installer_file_name }}" state=absent
+  file:
+    path: "{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_linux_installer_file_name }}"
+    state: absent
   sudo: yes
 
 - name: Compute the Dynatrace Collector's start runlevels for Ubuntu and Debian based distros
@@ -64,14 +95,25 @@
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: Make the 'dynaTraceCollector' init script available in /etc/init.d
-  template: src=templates/linux/init.d/dynaTraceCollector.j2 dest=/etc/init.d/dynaTraceCollector owner=root group=root mode=0755
+  template:
+    src: templates/linux/init.d/dynaTraceCollector.j2
+    dest: /etc/init.d/dynaTraceCollector
+    owner: root
+    group: root
+    mode: 0755
   sudo: yes
 
 - name: Enable and start Dynatrace Collector services
-  service: name=dynaTraceCollector state=restarted sleep=5 enabled=yes
+  service:
+    name: dynaTraceCollector
+    state: restarted
+    sleep: 5
+    enabled: yes
   sudo: yes
 
-- name: Wait for the Dynatrace Collector to become available via port {{ dynatrace_collector_agent_port }}
-  wait_for: port={{ dynatrace_collector_agent_port }} state=started
+- name: "Wait for the Dynatrace Collector to become available via port {{ dynatrace_collector_agent_port }}"
+  wait_for:
+    port: "{{ dynatrace_collector_agent_port }}"
+    state: started
   with_items: [dynatrace_collector_agent_port]
   sudo: yes

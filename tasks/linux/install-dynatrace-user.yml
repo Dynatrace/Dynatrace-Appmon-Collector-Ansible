@@ -1,4 +1,6 @@
 ---
-- name: Install system user '{{ dynatrace_collector_owner }}'
-  user: name="{{ dynatrace_collector_owner }}" comment='Dynatrace user' system=yes
+- name: "Install system user '{{ dynatrace_collector_owner }}'"
+  user:
+    name: "{{ dynatrace_collector_owner }}"
+    system: yes
   sudo: yes
