@@ -17,6 +17,3 @@ dynatrace_collector_jvm_max_perm_size:
 dynatrace_collector_role_name: Dynatrace.Dynatrace-Collector
 dynatrace_collector_owner: dynatrace
 dynatrace_collector_group: dynatrace
-
-# Do not change anything below unless you know what you are doing!
-dynatrace_collector_linux_service_names: [dynaTraceCollector]

@@ -17,8 +17,7 @@
   template: src=templates/linux/run-dynatrace-collector-installer.sh.j2 dest=/tmp/run-dynatrace-collector-installer.sh
 
 - name: Stop and disable running Dynatrace Collector services
-  service: name={{ item }} state=stopped enabled=no
-  with_items: dynatrace_collector_linux_service_names
+  service: name=dynaTraceCollector state=stopped enabled=no
   sudo: yes
   ignore_errors: yes
 
@@ -64,14 +63,12 @@
     linux_service_stop_runlevels="0 1 2 6"
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
-- name: Make the '{{ item }}' init script available in /etc/init.d
-  template: src=templates/linux/init.d/{{ item }}.j2 dest=/etc/init.d/{{ item }} owner=root group=root mode=0755
-  with_items: dynatrace_collector_linux_service_names
+- name: Make the 'dynaTraceCollector' init script available in /etc/init.d
+  template: src=templates/linux/init.d/dynaTraceCollector.j2 dest=/etc/init.d/dynaTraceCollector owner=root group=root mode=0755
   sudo: yes
 
 - name: Enable and start Dynatrace Collector services
-  service: name={{ item }} state=restarted sleep=5 enabled=yes
-  with_items: dynatrace_collector_linux_service_names
+  service: name=dynaTraceCollector state=restarted sleep=5 enabled=yes
   sudo: yes
 
 - name: Wait for the Dynatrace Collector to become available via port {{ dynatrace_collector_agent_port }}
