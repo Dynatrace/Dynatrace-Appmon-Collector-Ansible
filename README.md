@@ -11,7 +11,7 @@ The role is available via:
 
 ## Description
 
-This role downloads and installs the most recent version of the Dynatrace Collector from [http://downloads.dynatracesaas.com](http://downloads.dynatracesaas.com). The default download link can be overridden via the `dynatrace_collector_linux_installer_file_url` attribute. Alternatively, you can place the installer artifact as `dynatrace-collector.jar` in the role's `files` directory from where it will be picked up during the installation. Please refer to `defaults/main.yml` for a list of supported attributes.
+This role downloads and installs the most recent version of the Dynatrace Collector from [http://downloads.dynatracesaas.com](http://downloads.dynatracesaas.com). Alternatively, you can place the installer artifact as `dynatrace-collector-linux-x86.jar` in the role's `files` directory from where it will be picked up during the installation. The default file name and URL can be overridden via the `dynatrace_collector_linux_installer_file_name` and `dynatrace_collector_linux_installer_file_url` attributes, respectively. Please refer to `defaults/main.yml` for a list of supported attributes.
 
 ## Role Variables
 
@@ -21,15 +21,15 @@ As defined in ```defaults/main.yml```:
 |-------------------------------------------------|--------------------------------------------------------------------------|-------------|
 | *dynatrace_collector_installer_bitsize*         | 64                                                                       | 32 or 64 |
 | *dynatrace_collector_linux_install_dir*         | /opt                                                                     | The Dynatrace Collector will be installed into the directory *$dynatrace_collector_linux_install_dir*/dynatrace-*$major*-*$minor*-*$rev*, where *$major*, *$minor* and *$rev* are given by the installer. A symbolic link to the actual installation directory will be created in *$dynatrace_collector_linux_install_dir*/dynatrace. |
-| *dynatrace_collector_linux_installer_file_name* | dynatrace-collector.jar                                                  | The file name of the Dynatrace Collector installer in the role's ```files``` directory. |
-| *dynatrace_collector_linux_installer_file_url*  | http://downloads.dynatracesaas.com/6.2/dynatrace-collector-linux-x86.jar | A HTTP, HTTPS or FTP URL to the Dynatrace Collector installer in the form (http\|https\|ftp)://[user[:pass]]@host.domain[:port]/path. |
+| *dynatrace_collector_linux_installer_file_name* | dynatrace-collector-linux-x86.jar                                        | The file name of the Dynatrace Collector installer in the role's ```files``` directory. |
+| *dynatrace_collector_linux_installer_file_url*  | http://downloads.dynatracesaas.com/6.3/dynatrace-collector-linux-x86.jar | A HTTP, HTTPS or FTP URL to the Dynatrace Collector installer in the form (http\|https\|ftp)://[user[:pass]]@host.domain[:port]/path. |
 | *dynatrace_collector_agent_port*                | 9998                                                                     | The port where the Collector shall listen for agent connections. |
 | *dynatrace_collector_server_hostname*           | localhost                                                                | The location of the Server the Collector shall connect to. |
 | *dynatrace_collector_server_port*               | 6698                                                                     | The port on the Server the Collector shall connect to. Use either ```6698``` (non-SSL) or ```6699``` (SSL). |
 | *dynatrace_collector_jvm_xms*                   |                                                                          | The Dynatrace Collector's JVM setting: -Xms. |
 | *dynatrace_collector_jvm_xmx*                   |                                                                          | The Dynatrace Collector's JVM setting: -Xmx. |
 | *dynatrace_collector_jvm_perm_size*             |                                                                          | The Dynatrace Collector's JVM setting: -XX:PermSize. |
-| *dynatrace_collector_jvm_max_perm_size*         |                                                                          | The The Dynatrace Collector's JVM setting: -XX:MaxPermSize. |
+| *dynatrace_collector_jvm_max_perm_size*         |                                                                          | The Dynatrace Collector's JVM setting: -XX:MaxPermSize. |
 | *dynatrace_collector_owner*                     | dynatrace                                                                | The system user that owns the Dynatrace installation.
 | *dynatrace_collector_group*                     | dynatrace                                                                | The system user's group that owns the Dynatrace installation.
 | *dynatrace_collector_role_name*                 | Dynatrace.Dynatrace-Collector                                            | The actual name of this role in an [Ansible Playbook's](http://docs.ansible.com/playbooks.html) ```roles``` directory. |
