@@ -14,10 +14,18 @@
   when: dynatrace_collector_create_install_dir_result | changed
   become: yes
 
-- name: "Copy the Dynatrace Collector installer to {{ dynatrace_collector_linux_install_dir }}"
+- name: "Copy the Dynatrace installer to {{ dynatrace_collector_linux_install_dir }} if the installer is provided locally"
   copy:
     src: "{{ playbook_dir }}/roles/{{ dynatrace_collector_role_name }}/files/linux/{{ dynatrace_collector_linux_installer_file_name }}"
     dest: "{{ dynatrace_collector_linux_install_dir }}"
+  when: dynatrace_collector_installer_file_provided.stat.exists
+  become: yes
+
+- name: "Download the Dynatrace installer to {{ dynatrace_collector_linux_install_dir }} if the installer is not provided locally"
+  get_url:
+    url: "{{ dynatrace_collector_linux_installer_file_url }}"
+    dest: "{{ dynatrace_collector_linux_install_dir }}"
+  when: not dynatrace_collector_installer_file_provided.stat.exists
   become: yes
 
 - name: Copy the Dynatrace Collector installer script to /tmp
