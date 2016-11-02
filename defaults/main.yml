@@ -2,12 +2,12 @@
 dynatrace_collector_installer_bitsize: 64
 
 dynatrace_collector_linux_install_dir: /opt
-dynatrace_collector_linux_installer_file_name: dynatrace-collector-linux-x86.jar
-dynatrace_collector_linux_installer_file_url: "http://downloads.dynatracesaas.com/6.3/{{ dynatrace_collector_linux_installer_file_name }}"
+dynatrace_collector_linux_installer_file_name: dynatrace-collector-6.5.0.1289-linux-x86.jar
+dynatrace_collector_linux_installer_file_url: "https://files.dynatrace.com/downloads/OnPrem/dynaTrace/6.5/6.5.0.1289/{{ dynatrace_collector_linux_installer_file_name }}"
 
 dynatrace_collector_agent_port: 9998
 dynatrace_collector_server_hostname: localhost
-dynatrace_collector_server_port: 6698
+dynatrace_collector_server_port: 6699
 
 dynatrace_collector_jvm_xms:
 dynatrace_collector_jvm_xmx:
