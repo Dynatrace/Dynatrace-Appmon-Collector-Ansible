@@ -71,7 +71,7 @@
 - name: Change mode of the installation directory
   file:
     path: "{{ dynatrace_collector_linux_install_dir }}/{{ dynatrace_collector_installed_version_dir.stdout }}"
-    mode: 0755
+    mode: 0775
   become: yes
 
 - name: "Create a symlink of the actual installation directory to {{ dynatrace_collector_linux_install_dir }}/dynatrace"
@@ -80,7 +80,7 @@
     dest: "{{ dynatrace_collector_linux_install_dir }}/dynatrace"
     owner: "{{ dynatrace_collector_owner }}"
     group: "{{ dynatrace_collector_group }}"
-    mode: 0755
+    mode: 0775
     state: link
   become: yes
 
