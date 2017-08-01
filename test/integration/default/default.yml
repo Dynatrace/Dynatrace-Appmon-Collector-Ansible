@@ -2,8 +2,6 @@
 - hosts: test-kitchen
   roles:
   - role: Dynatrace.Dynatrace-Collector
-    dynatrace_collector_linux_installer_file_name: dynatrace-collector.jar
-    dynatrace_collector_linux_installer_file_url: "http://10.0.2.2/dynatrace/6.3/{{ dynatrace_collector_linux_installer_file_name }}"
     dynatrace_collector_jvm_xms: 256M
     dynatrace_collector_jvm_xmx: 1024M
     dynatrace_collector_jvm_perm_size: 256m
